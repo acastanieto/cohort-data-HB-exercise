@@ -40,15 +40,13 @@ def sort_by_cohort(filename):
 
     """
 
-    all_students = []
     winter_15 = []
     spring_15 = []
     tas = []
 
-    # Code goes here
     cohort_info = open(filename)
-    for person_info in cohort_info:
-        person_info = person_info.rstrip().split("|")
+    for line in cohort_info:
+        person_info = line.rstrip().split("|")
         cohort = person_info[4]
         first_and_last_name = person_info[0] + " " + person_info[1]
         if cohort == "Winter 2015":
@@ -64,9 +62,7 @@ def sort_by_cohort(filename):
     spring_15.sort()
     tas.sort()
 
-    all_students.extend([winter_15, spring_15, tas])
-
-    return all_students
+    return [winter_15, spring_15, tas]
 
 #print sort_by_cohort("cohort_data.txt")
 
@@ -87,7 +83,6 @@ def students_by_house(filename):
             ]
     """
 
-    all_students = []
     gryffindor = []
     hufflepuff = []
     slytherin = []
@@ -97,8 +92,8 @@ def students_by_house(filename):
 
     # Code goes here
     cohort_info = open(filename)
-    for person_info in cohort_info:
-            person_info = person_info.rstrip().split("|")
+    for line in cohort_info:
+            person_info = line.rstrip().split("|")
             last_name = person_info[1]
             house = person_info[2]
             cohort = person_info[4]
@@ -118,9 +113,7 @@ def students_by_house(filename):
             else:
                 print last_name, "is an instructor"
 
-    all_students.extend([gryffindor, hufflepuff, slytherin, dumbledores_army, ravenclaw, tas])
-
-    return all_students
+    return [gryffindor, hufflepuff, slytherin, dumbledores_army, ravenclaw, tas]
 
 #print students_by_house("cohort_data.txt")
 
@@ -141,11 +134,13 @@ def all_students_tuple_list(filename):
     # Code goes here
 
     cohort_info = open(filename)
-    for person_info in cohort_info:
-        person_info_list = person_info.rstrip().split("|")
+
+    for line in cohort_info:
+        person_info_list = line.rstrip().split("|")
 
         cohort = person_info_list[4]
         if cohort == "Winter 2015" or cohort == "Spring 2015":
+
             full_name = person_info_list[0] + " " + person_info_list[1]
             house = person_info_list[2]
             advisor = person_info_list[3]
@@ -155,6 +150,7 @@ def all_students_tuple_list(filename):
 
     return student_list
 
+#print all_students_tuple_list("cohort_data.txt")
 
 def find_cohort_by_student_name(student_list, student_name):
     """TODO: Given full name, return student's cohort.
@@ -169,13 +165,11 @@ def find_cohort_by_student_name(student_list, student_name):
         if student_name == person_info_tuple[0]:
             return person_info_tuple[3]
 
-    else:
-
-        return "Student not found."
+    return "Student not found."
 
 student_list = all_students_tuple_list("cohort_data.txt")
-#print find_cohort_by_student_name(student_list, "Angela Castanieto")
-#print find_cohort_by_student_name(student_list, "slkdjfld klfjlds")
+# print find_cohort_by_student_name(student_list, "Angela Castanieto")
+# print find_cohort_by_student_name(student_list, "slkdjfld klfjlds")
 ##########################################################################################
 # Further Study Questions
 
@@ -194,8 +188,8 @@ def find_name_duplicates(filename):
     spring_names = set()
     cohort_info = open(filename)
 
-    for person_info in cohort_info:
-        person_info = person_info.rstrip().split("|")
+    for line in cohort_info:
+        person_info = line.rstrip().split("|")
 
         if person_info[4] == "Winter 2015":
             winter_names.add(person_info[0])
@@ -225,11 +219,12 @@ def find_house_members_by_student_name(student_list, student_full_name):
             break
 
     for student_info_tuple in student_list:
-        if student_full_name != student_info_tuple[0]:
-            if student_cohort == student_info_tuple[3] and student_house == student_info_tuple[1]:
-                students_in_cohort_and_house.append(student_info_tuple[0])
+        if (student_full_name != student_info_tuple[0] and
+                student_cohort == student_info_tuple[3] and
+                student_house == student_info_tuple[1]):
+            students_in_cohort_and_house.append(student_info_tuple[0])
 
     return students_in_cohort_and_house
 
 student_list = all_students_tuple_list("cohort_data.txt")
-print find_house_members_by_student_name(student_list, "Angela Castanieto")
+#print find_house_members_by_student_name(student_list, "Angela Castanieto")
