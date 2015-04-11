@@ -17,10 +17,12 @@ def unique_houses(filename):
 
     # Code goes here
     cohort_info = open(filename)
-    for person_info in cohort_info:
-        person_info = person_info.rstrip().split("|")
+
+    for line in cohort_info:
+        person_info = line.rstrip().split("|")
         house = person_info[2]
-        houses.add(house)
+        if len(house) > 0:
+            houses.add(house)
 
     return houses
 
